@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:yes_no_app/domain/message.dart';
+import 'package:yes_no_app/infrastructure/models/yes_no_model.dart';
 
 class HerMessageBubble extends StatelessWidget {
-  const HerMessageBubble({super.key});
+
+  final Message message;
+  const HerMessageBubble({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -16,15 +20,15 @@ class HerMessageBubble extends StatelessWidget {
             color: colors.secondary, 
             borderRadius : BorderRadius.circular(20),
             ),
-            child: const Padding(  
-              padding: EdgeInsets.symmetric( horizontal: 20, vertical: 10),
+            child: Padding(  
+              padding: const EdgeInsets.symmetric( horizontal: 20, vertical: 10),
               child: Text(
-                'Hola mundo', 
-              style: TextStyle( color: Colors.white),),),
+                message.text, 
+              style: const TextStyle( color: Colors.white),),),
         ),
         const SizedBox(height: 5),
 
-        _ImageBubble(),
+        _ImageBubble(message.imageUrl!),
 
         const SizedBox( height: 10,)
 
@@ -36,6 +40,10 @@ class HerMessageBubble extends StatelessWidget {
 
 class _ImageBubble extends StatelessWidget {
 
+  final String imageUrl;
+
+  const _ImageBubble(this.imageUrl);
+
   @override
   Widget build(BuildContext context) {
 
@@ -43,7 +51,7 @@ class _ImageBubble extends StatelessWidget {
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
-      child: Image.network('https://yesno.wtf/assets/no/19-2062f4c91189b1f88a9e809c10a5b0f0.gif',
+      child: Image.network(imageUrl,
       width: size.width * 0.7,
       height: 150,
       fit: BoxFit.cover,
@@ -53,7 +61,7 @@ class _ImageBubble extends StatelessWidget {
           width: size.width * 0.7,
           height: 150,
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          child: const Text('Kazuha está escribiendo una imagen'),
+          child: const Text('Kazuha está enviando una imagen'),
         );
       },
     ));
